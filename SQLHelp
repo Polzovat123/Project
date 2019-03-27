@@ -1,0 +1,28 @@
+package example.com.vico;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class HelpSQL extends SQLiteOpenHelper {
+    private static final String nameDB="product.db";
+    private static final int SCHEMA = 1;
+    public static final String nameTable="goods";
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_NAME_PRODUCT = "name";
+    public static final String COLUMN_YEAR_ = "year";
+    public HelpSQL(Context context) {
+        super(context, nameDB, null, SCHEMA);
+    }
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE goods ("+COLUMN_ID+"INTEGER, "+COLUMN_NAME_PRODUCT+"TEXT, "+COLUMN_YEAR_+"TEXT);");
+        db.execSQL("INSERT INTO "+nameTable+" ("+COLUMN_ID+", "+COLUMN_NAME_PRODUCT+", "+COLUMN_YEAR_+") VALUES (1,'Kefir','23/12/2012');");
+        //db.execSQL("INSERT INTO goods ("+COLUMN_ID+", "+COLUMN_NAME_PRODUCT+", "+COLUMN_YEAR_+") VALUES (2,'Kefir','23/12/2012');");
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS "+nameTable);
+        onCreate(db);
+    }
+}
